@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ai-caption-editor",
+    "name": "AI Caption Editor",
     "slug": "ai-caption-editor",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,14 +9,20 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.atariq.aicaptioneditor"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.atariq.aicaptioneditor"
     },
     "web": {
       "bundler": "metro",
@@ -32,6 +38,25 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "16.0"
+          }
+        }
+      ],
+      "expo-video",
+      "expo-audio",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow ${PRODUCT_NAME} to access your photos.",
+          "savePhotosPermission": "Allow ${PRODUCT_NAME} to save photos to your library.",
+          "isAccessMediaLocationEnabled": true
         }
       ]
     ],
