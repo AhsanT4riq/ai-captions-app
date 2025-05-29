@@ -38,3 +38,9 @@ yarn-error.*
 
 app-example
 convex/_generated
+
+.env.local
+
+# Sentry
+ios/sentry.properties
+android/sentry.properties

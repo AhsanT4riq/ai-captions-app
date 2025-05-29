@@ -4,17 +4,21 @@
     "slug": "ai-caption-editor",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/icon.png",
     "scheme": "aicaptioneditor",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.atariq.aicaptioneditor"
+      "bundleIdentifier": "com.atariq.aicaptioneditor",
+      "associatedDomains": [
+        "applinks:settled-colt-82.clerk.accounts.dev",
+        "webcredentials:settled-colt-82.clerk.accounts.dev"
+      ]
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -27,14 +31,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./src/assets/images/icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -57,6 +61,14 @@
           "photosPermission": "Allow ${PRODUCT_NAME} to access your photos.",
           "savePhotosPermission": "Allow ${PRODUCT_NAME} to save photos to your library.",
           "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "ai-caption-editor",
+          "organization": "atariq"
         }
       ]
     ],

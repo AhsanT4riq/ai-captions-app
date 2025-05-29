@@ -1,4 +1,5 @@
 import { ClerkLoaded, ClerkProvider, useAuth, useUser } from '@clerk/clerk-expo';
+import { passkeys } from '@clerk/clerk-expo/passkeys';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
 import {
   Poppins_400Regular,
@@ -8,13 +9,18 @@ import {
   useFonts,
 } from '@expo-google-fonts/poppins';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 import { ConvexReactClient } from 'convex/react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
 import { Slot, SplashScreen } from 'expo-router';
 import { useEffect } from 'react';
 import { LogBox, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import { SentryInit, SentryWrapRootLayout } from '@/lib/sentry';
 import '~/global.css';
+
+SentryInit();
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishableKey) {
@@ -47,6 +53,15 @@ const InitialLayout = () => {
 
   useEffect(() => {
     console.log(user);
+    if (user?.user) {
+      Sentry.setUser({
+        id: user.user.id,
+        email: user.user.emailAddresses[0].emailAddress,
+        name: user.user.fullName,
+      });
+    } else {
+      Sentry.setUser(null);
+    }
   }, [user]);
 
   return fontsLoaded ? <Slot /> : null;
@@ -56,7 +71,11 @@ const RootLayout = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+    <ClerkProvider
+      publishableKey={publishableKey}
+      tokenCache={tokenCache}
+      __experimental_passkeys={passkeys}
+    >
       <ClerkLoaded>
         <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
           <GestureHandlerRootView style={{ flex: 1 }}>
@@ -70,4 +89,4 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;
+export default SentryWrapRootLayout(RootLayout);

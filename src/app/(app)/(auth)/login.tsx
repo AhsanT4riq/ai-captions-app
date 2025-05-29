@@ -22,11 +22,11 @@ import { twFullConfig } from '@/utils/twconfig';
 export default function Login() {
   const [loading, setLoading] = useState<'google' | 'apple' | 'email' | false>(false);
   const [isTermsChecked, setIsTermsChecked] = useState(false);
-  const [email, setEmail] = useState('ahsantariqfast@gamil.com');
+  const [email, setEmail] = useState('ahsan_work@outlook.com');
   const setEmailAtom = useSetAtom(emailAtom);
 
   const { startSSOFlow } = useSSO();
-  const { signUp } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const { signIn, setActive } = useSignIn();
   const router = useRouter();
 
@@ -51,23 +51,26 @@ export default function Login() {
     }
   };
 
-  const handleEmailSignIn = async () => {
+  const handleEmailSignUp = async () => {
+    if (!isLoaded) {
+      return;
+    }
     if (!isTermsChecked) {
       console.log('Please agree to the terms.');
       return;
     }
     try {
       setEmailAtom(email);
-
-      await signUp?.create({
+      console.log('email', email);
+      await signUp.create({
         emailAddress: email,
       });
-      await signUp!.prepareEmailAddressVerification({ strategy: 'email_code' });
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
       router.push('/verify');
     } catch (error) {
       if (isClerkAPIResponseError(error)) {
         if (error.status === 422) {
-          handleSignInWithEmail();
+          handleEmailSignIn();
         } else {
           Alert.alert('Error', 'Something went wrong');
         }
@@ -75,7 +78,7 @@ export default function Login() {
     }
   };
 
-  const handleSignInWithEmail = async () => {
+  const handleEmailSignIn = async () => {
     try {
       const signInAttempt = await signIn?.create({
         strategy: 'email_code',
@@ -104,7 +107,7 @@ export default function Login() {
       } else {
         // If the status is not complete, check why. User may need to
         // complete further steps.
-        console.error(JSON.stringify(signInAttempt, null, 2));
+        console.log(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
@@ -160,7 +163,7 @@ export default function Login() {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={handleSignInWithEmail}
+          onPress={handleEmailSignUp}
           disabled={loading === 'email' || !email || !isTermsChecked}
           className={`w-full py-4 rounded-lg mt-10 transition-colors duration-300 ${!email || !isTermsChecked || loading ? 'bg-gray-800' : 'bg-primary'}`}
         >
@@ -176,6 +179,14 @@ export default function Login() {
         </Text>
 
         <View className="gap-4">
+          <Pressable
+            className="w-full flex-row justify-center items-center bg-gray-800 p-4 rounded-lg"
+            onPress={signInWithPasskey}
+          >
+            <Text className="text-white text-center font-Poppins_600SemiBold ml-3 text-base">
+              Continue with Passkey
+            </Text>
+          </Pressable>
           <Pressable
             className="w-full flex-row justify-center items-center bg-gray-800 p-4 rounded-lg"
             onPress={() => handleSignInWithSSO('oauth_apple')}
