@@ -158,15 +158,11 @@ You need to set up a webhook in Clerk to handle the user creation and update eve
 2. Go to **API** and select **Webhooks**
 3. Add the following webhook, which should point to your Convex instance and include the `user.created` and `user.deleted` events:
 
-<img src="./screenshots/webhook.png" width=100%>
-
 ### ElevenLabs Setup
 
 1. Create an account on [ElevenLabs](https://elevenlabs.io/)
 2. Get an API key from ElevenLabs
 3. Add the key to Convex by running `bunx convex env set ELEVENLABS_API_KEY=<your-api-key>`
-
-<img src="./screenshots/elevenlabs.png">
 
 ### Sentry Setup
 
