@@ -41,7 +41,7 @@ export default function Create() {
         />
       </View>
       <TouchableOpacity className="mt-3 mb-8 bg-zinc-800 rounded-2xl p-4" onPress={onCancel}>
-        <Text className="text-center text-lg text-gray-400 font-Poppins_500Medium">Cancel</Text>
+        <Text className="text-center text-lg text-white font-Poppins_500Medium">Cancel</Text>
       </TouchableOpacity>
     </View>
   );

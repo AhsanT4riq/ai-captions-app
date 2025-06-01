@@ -88,7 +88,7 @@ export default function FileList() {
       }
 
       const projectId = await createProject({
-        name: video.filename || 'untitled',
+        name: `${Date.now()}.${video.filename.split('.').pop()}`,
         videoSize: videoBlob.size,
         videoFileId: storageId,
       });

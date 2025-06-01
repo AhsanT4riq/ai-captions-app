@@ -64,10 +64,10 @@ export default function AppLayout() {
               fontFamily: 'Poppins_600SemiBold',
             },
             presentation: 'fullScreenModal',
-            animation: 'fade',
+            animation: 'slide_from_bottom',
             headerLeft: () => (
               <Pressable onPress={() => router.dismissAll()}>
-                <Ionicons name="close-outline" size={24} color="white" />
+                <Ionicons name="close-outline" size={28} color="white" />
               </Pressable>
             ),
           }}

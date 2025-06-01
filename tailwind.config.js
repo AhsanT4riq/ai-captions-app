@@ -8,6 +8,8 @@ module.exports = {
       colors: {
         primary: '#F3B01C',
         dark: '#131417',
+        secondary: '#1A1A1A',
+        tertiary: '#9CA3AF',
       },
       fontFamily: {
         Poppins_400Regular: ['Poppins_400Regular'],

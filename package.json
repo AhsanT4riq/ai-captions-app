@@ -24,6 +24,8 @@
     "@react-navigation/native": "^7.1.6",
     "@sentry/react-native": "^6.14.0",
     "convex": "^1.24.2",
+    "date-fns": "^4.1.0",
+    "elevenlabs": "^1.59.0",
     "expo": "~53.0.9",
     "expo-audio": "~0.4.5",
     "expo-blur": "~14.1.4",

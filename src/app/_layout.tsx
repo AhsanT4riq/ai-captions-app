@@ -52,7 +52,6 @@ const InitialLayout = () => {
   }, [fontsLoaded]);
 
   useEffect(() => {
-    console.log(user);
     if (user?.user) {
       Sentry.setUser({
         id: user.user.id,

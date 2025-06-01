@@ -16,9 +16,7 @@ const ActionButton = ({ icon, title, subtitle, onPress }: ActionButtonProps) => 
       <View>{icon}</View>
       <View>
         <Text className="text-primary text-lg font-Poppins_600SemiBold text-center">{title}</Text>
-        <Text className="text-gray-400 text-sm font-Poppins_400Regular text-center">
-          {subtitle}
-        </Text>
+        <Text className="text-white text-sm font-Poppins_400Regular text-center">{subtitle}</Text>
       </View>
     </TouchableOpacity>
   );
