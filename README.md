@@ -13,6 +13,21 @@
 
 AI Caption Editor is a modern, cross-platform mobile application that leverages artificial intelligence to help users create, edit, and manage video captions with ease. The app provides an intuitive interface for generating accurate captions, customizing their appearance, and exporting them in various formats.
 
+Packages:
+
+- [Expo Router](https://docs.expo.dev/routing/introduction/) file-based navigation
+- [Convex Database](https://docs.convex.dev/database?utm_source=simon_grimm&utm_medium=video&dub_id=eV96rPl11O0EC58S) for data storage
+- [Convex File Storage](https://docs.convex.dev/file-storage?utm_source=simon_grimm&utm_medium=video&dub_id=eV96rPl11O0EC58S) for file storage
+- [Sentry](https://dub.sh/sentry-galaxies) for error tracking
+- [Clerk Passkeys](https://docs.clerk.com/passkeys/overview?utm_source=simong&utm_medium=youtube&utm_campaign=captions-clone&dub_id=5zB4z5fxgHWQzbgE) for passwordless authentication
+- [Haptics](https://docs.expo.dev/versions/latest/sdk/haptics/) for haptic feedback
+- [Jotai](https://jotai.pmnd.rs/) for state management
+- [NativeWind](https://www.nativewind.dev/) for styling
+- [Expo Secure Store](https://docs.expo.dev/versions/latest/sdk/secure-store/) for secure storage
+- [Expo Image Picker](https://docs.expo.dev/versions/latest/sdk/image-picker/) for image picking
+- [Expo Video](https://docs.expo.dev/versions/latest/sdk/video/) for video playback
+- [Expo Audio](https://docs.expo.dev/versions/latest/sdk/audio/) for audio playback
+
 ## ✨ Features
 
 - 🎥 **Video Integration**: Seamlessly import and preview videos from your device
@@ -74,7 +89,7 @@ AI Caption Editor is a modern, cross-platform mobile application that leverages 
 2. Install dependencies
 
    ```bash
-   bun
+   bun install
    ```
 
 3. Set up environment variables
@@ -88,13 +103,75 @@ AI Caption Editor is a modern, cross-platform mobile application that leverages 
 4. Start the development server
 
    ```bash
+   bun expo prebuild
    bun start
    ```
 
 5. Run on your preferred platform
-   - iOS: Press `i` in the terminal
-   - Android: Press `a` in the terminal
-   - Web: Press `w` in the terminal
+   - iOS: `bun ios`
+   - Android: `bun android`
+
+### Convex Setup
+
+1. Create an account on [Convex](https://convex.dev)
+2. Run `bunx convex dev` to start the development server
+
+### Microservice Setup
+
+1. `brew install ffmpeg` to install `ffmpeg`
+2. Go into the `/microservice` folder
+3. Run `bun install` to install the dependencies
+4. Run `bun run dev` to start the microservice
+
+You then have to add the URL to the Convex environment variable `MICROSERVICE_URL`. I recommend using something like [ngrok](https://ngrok.com/) to test the microservice locally.
+
+```bash
+bunx convex env set MICROSERVICE_URL <your-microservice-url>
+```
+
+### Authentication Setup
+
+Create a [Clerk](https://clerk.com/) account and project, then update the `convex/auth.config.js` file with your `domain` and `applicationID`.
+
+```bash
+bunx convex env set CLERK_FRONTEND_API_URL your-clerk-frontend-api-url
+```
+
+```js
+export default {
+  providers: [
+    {
+      domain: process.env.CLERK_FRONTEND_API_URL,
+      applicationID: 'convex',
+    },
+  ],
+};
+```
+
+You also need to connect Convex and Clerk with a JWT template. For this, cehck out the video and [Convex docs](https://docs.convex.dev/auth).
+
+### Webhook Setup
+
+You need to set up a webhook in Clerk to handle the user creation and update events.
+
+1. Go to [Clerk](https://clerk.com/) and select your project
+2. Go to **API** and select **Webhooks**
+3. Add the following webhook, which should point to your Convex instance and include the `user.created` and `user.deleted` events:
+
+<img src="./screenshots/webhook.png" width=100%>
+
+### ElevenLabs Setup
+
+1. Create an account on [ElevenLabs](https://elevenlabs.io/)
+2. Get an API key from ElevenLabs
+3. Add the key to Convex by running `bunx convex env set ELEVENLABS_API_KEY=<your-api-key>`
+
+<img src="./screenshots/elevenlabs.png">
+
+### Sentry Setup
+
+1. Create a new project on [Sentry](https://sentry.io/)
+2. Use the `bunx @sentry/wizard@latest -s -i reactNative` command to setup Sentry for your project
 
 ## 🤝 Contributing
 
